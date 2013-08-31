@@ -6,17 +6,20 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
 	<!-- Listeners -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:/conf/spring/application-context.xml</param-value>
 	</context-param>
 
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
-	<listener>
 		<listener-class>com.league.web.ObjectifyServletContextListener</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>com.league.web.SetupServletContextListener</listener-class>
 	</listener>
 	
 	<!-- Servlets -->

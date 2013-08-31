@@ -1,0 +1,105 @@
+@startuml
+
+class Season {
+	long id
+	..
+}
+
+class Week {
+	Key<Season> season
+	long id
+	..
+	Date start
+	Date end
+	Date lock
+}
+
+class Team {
+	Key<Week> week
+	Long id
+	..
+	String name
+	String abbr
+	Long rank
+}
+
+class Game {
+	Key<Week> week
+	Long id
+	..
+	Ref<Team> away
+	Ref<Team> home
+	Ref<Team> winner
+	Ref<Team> guideWinner
+	Long guideWinnerScore
+	Long guideLoserScore
+	String guideComment;
+}
+
+class Leaderboard {
+	Key<Week> week
+	String name
+	..
+	List<Score> scores
+}
+
+class Score {
+	..
+	Key<Player> player
+	Long value
+}
+
+class Invite {
+	Long id
+	..
+	String name
+	String email
+	String hash
+}
+
+class User {
+	long id
+	..
+	String email
+}
+
+class Player {
+	Key<User> user
+	Long id
+	..
+	Key<Season> season
+	String name
+	Long defaults
+}
+
+class Ticket {
+	Key<Player> player
+	Long id
+	..
+	Key<Week> week
+	Date submitTime
+	List<Pick> picks
+}
+
+class Pick {
+	..
+	Key<Game> game
+	Key<Team> winner
+}
+
+
+Season <|-- Week
+Week <|-- Team
+Week <|-- Game
+Week <|-- Leaderboard
+Leaderboard *-- "many" Score
+
+User <|-- Player
+Player <|-- Ticket
+Ticket *-- "many" Pick
+
+note right of User: id is Google User ID
+
+
+
+@enduml

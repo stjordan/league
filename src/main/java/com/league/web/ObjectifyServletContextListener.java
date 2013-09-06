@@ -5,12 +5,14 @@ import javax.servlet.ServletContextListener;
 
 import com.googlecode.objectify.ObjectifyService;
 import com.league.model.Season;
+import com.league.model.Week;
 
 public class ObjectifyServletContextListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(final ServletContextEvent sce) {
 		ObjectifyService.register(Season.class);
+		ObjectifyService.register(Week.class);
 	}
 
 	@Override

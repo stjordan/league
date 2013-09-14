@@ -1,15 +1,11 @@
 package com.league.model;
 
 import com.google.common.base.Objects;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class Season {
-
-	public static final Key<Season> SEASON_KEY = Key
-			.create(Season.class, 2013L);
 
 	@Id
 	private long id;

@@ -3,6 +3,7 @@ package com.league.model;
 import java.util.Date;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Range;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -16,6 +17,19 @@ public class Week {
 		@Override
 		public Date apply(final Week input) {
 			return input.getLock();
+		}
+
+	};
+
+	/**
+	 * Transforms a {@link Week} into a [{@link #start}, {@link #end}]
+	 * {@link Range}
+	 */
+	public static final Function<Week, Range<Date>> TO_RANGE = new Function<Week, Range<Date>>() {
+
+		@Override
+		public Range<Date> apply(final Week input) {
+			return Range.closed(input.getStart(), input.getEnd());
 		}
 
 	};
@@ -45,6 +59,10 @@ public class Week {
 		this.start = start;
 		this.lock = lock;
 		this.end = end;
+	}
+
+	public Week(final long id, final Date lock) {
+		this(null, id, null, lock, null);
 	}
 
 	public Key<Season> getSeason() {

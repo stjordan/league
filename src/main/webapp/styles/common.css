@@ -1,7 +1,6 @@
 @CHARSET "UTF-8";
-html { font-size: 100%; /* for IE */}
-body {
-	margin: 0px;
-	font-family: Helvetica;
-	font-size: 1em;
+
+div.content {
+	margin-left: 20px;
+	margin-right: 20px;
 }

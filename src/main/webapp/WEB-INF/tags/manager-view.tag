@@ -3,56 +3,100 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ attribute name="title"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-	<head>
-		<title>${title}</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>${title}</title>
 		
-		<!-- e.g. http://incredibleleague.appspot.com/, or http://localhost:8080/ -->
-		<c:set var="req" value="${pageContext.request}"/>
-		<c:set var="host" value="${fn:replace(req.requestURL, req.requestURI, '')}/"/>
-		<base href="${host}manager/">
-		
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<!-- <script src="/scripts/main.js"></script> -->
-		<link rel="stylesheet" type="text/css" href="../styles/common.css" />
-		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css"/>
-	</head>
-	<body>
-	
-		<ul class="nav">
-			<li>
-				<div class="exit-icon"></div>
-				<div>Exit</div>
-			</li>
-			<li>
-				<div class="no-icon"></div>
-				<div>
-					<a href="weeks">Weeks</a>
-				</div>
-			</li>
-			<li>
-				<div class="divider-icon"></div>
-				<div>${week.id}
-					<span><fmt:formatDate pattern="M/d" value="${week.lock}"/></span>
-				</div>
-				<ul>
-					<c:forEach var="_week" items="${weeks}">
-						<li>
-							<a  href="weeks/${_week.id}/${weekResource}">${_week.id} <span><fmt:formatDate pattern="M/d" value="${week.lock}"/></span></a>
-						</li>
-					</c:forEach>
-				</ul>
-			</li>
-			<li class="user">
-				<div class="menu-icon"></div>
-				<%-- <div>${player.name}</div> --%>
-			</li>
-		</ul>
-	
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<jsp:doBody/>
+      <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css"/>
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" media="screen">
+      <link rel="stylesheet" type="text/css" href="../styles/common.css" />
+
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+      <!-- <script src="/scripts/main.js"></script> -->
+
+      <!-- e.g. http://incredibleleague.appspot.com/, or http://localhost:8080/ -->
+      <c:set var="req" value="${pageContext.request}"/>
+      <c:set var="host" value="${fn:replace(req.requestURL, req.requestURI, '')}/"/>
+      <base href="${host}manager/">
+      
+      <fmt:setTimeZone value="America/New_York"/>
+  </head>
+  <body>
+	
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+	  <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+		  <span class="icon-bar"></span>
+		  <span class="icon-bar"></span>
+		  <span class="icon-bar"></span>
+        </button>
+		<a class="navbar-brand" href="#"><!-- <span class="glyphicon glyphicon-home"></span> -->Incredible League</a>
+	  </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+	  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    
+	    <ul class="nav navbar-nav">
+      
+          <!-- Players -->
+		  <li>
+		    <a href="#"><span class="glyphicon glyphicon-user"></span> Players</a>
+		  </li>
+          
+          <!-- Weeks -->
+	      <li class="dropdown">
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			  <span class="glyphicon glyphicon-calendar"></span>
+              <c:choose>
+                <c:when test="${week ne null}">
+                  Week ${week.id} - <fmt:formatDate type="both" pattern="M/d" value="${week.lock}"/>
+                </c:when>
+                <c:otherwise>
+                  Weeks
+                </c:otherwise>
+              </c:choose>
+			</a>
+			<ul class="dropdown-menu">
+		      <c:forEach var="week" items="${weeks}">
+			    <li><a href="#">Week ${week.id} - <fmt:formatDate type="both" pattern="M/d" value="${week.lock}"/></a>
+              </c:forEach>
+              <li class="divider"></li>
+              <li><a href="weeks">Edit Weeks</a></li>
+			</ul>
+          </li>
+          
+          <!-- Teams/Games/Tickets -->
+		  <li><a href="#">Teams</a></li>
+		  <li><a href="#">Games</a></li>
+		  <li><a href="#">Tickets</a></li>
+        </ul>
+        
+		<ul class="nav navbar-nav navbar-right">
+		  <li class="dropdown">
+		    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Steve <b class="caret"></b></a>
+		    <ul class="dropdown-menu">
+		      <li><a href="#">Settings</a></li>
+		      <li><a href="#">Manager</a></li>
+		      <li><a href="#">Log Out</a></li>
+		    </ul>
+		  </li>
+        </ul>
+        
+      </div><!-- /.navbar-collapse -->
+ 	</nav>
+	
+		<div class="content">
+			<jsp:doBody/>
+		</div>
+		
 	</body>
 </html>
